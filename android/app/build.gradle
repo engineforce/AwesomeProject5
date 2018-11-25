@@ -2,6 +2,20 @@ apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
 
+import groovy.json.JsonSlurper
+
+def getNpmVersion() {
+    def inputFile = new File("../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["version"]
+}
+
+/* calculated from git commits to give sequential integers */
+def getGitVersion() {
+    def process = "git rev-list master --first-parent --count".execute()
+    return process.text.toInteger()
+}
+
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -92,6 +106,8 @@ def enableSeparateBuildPerCPUArchitecture = false
  * Run Proguard to shrink the Java bytecode in release builds.
  */
 def enableProguardInReleaseBuilds = false
+def userVer = getNpmVersion()
+def googleVer = getGitVersion()
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -101,10 +117,20 @@ android {
         applicationId "com.awesomeproject5"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode googleVer
+        versionName userVer
         ndk {
             abiFilters "armeabi-v7a", "x86"
+        }
+    }
+    signingConfigs {
+        release {
+            if (project.hasProperty('AWESOME_PROJECT5_RELEASE_STORE_FILE')) {
+                storeFile file(AWESOME_PROJECT5_RELEASE_STORE_FILE)
+                storePassword AWESOME_PROJECT5_RELEASE_STORE_PASSWORD
+                keyAlias AWESOME_PROJECT5_RELEASE_KEY_ALIAS
+                keyPassword AWESOME_PROJECT5_RELEASE_KEY_PASSWORD
+            }
         }
     }
     splits {
@@ -119,6 +145,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
