@@ -1,9 +1,9 @@
 {
   "name": "AwesomeProject5",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "scripts": {
-    "preflight": "npm test && npm version patch",
+    "preflight": "npm test && npm version patch --git-tag-version=false",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "build-android": "react-native run-android",
     "build-ios": "react-native run-ios",
