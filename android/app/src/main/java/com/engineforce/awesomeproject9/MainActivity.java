@@ -1,4 +1,4 @@
-package com.awesomeproject8;
+package com.engineforce.awesomeproject9;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "awesomeproject8";
+        return "awesomeproject9";
     }
 }
