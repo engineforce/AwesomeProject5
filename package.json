@@ -1,12 +1,13 @@
 {
   "name": "awesomeproject10",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
+    "preflight": "npm test && npm version patch --git-tag-version=false",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "build-ios": "react-native run-ios",
     "build-android": "react-native run-android",
-    "test": "jest"
+    "test": "echo ''"
   },
   "dependencies": {
     "react": "16.6.1",

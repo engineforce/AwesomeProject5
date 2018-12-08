@@ -1,2 +1,5 @@
-json_key_file("") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
-package_name("com.engineforce.awesomeproject") # e.g. com.krausefx.app
+
+json_key_file("~/.google/api-4924605079478626337-401041-7246e46e432f.json") 
+
+package_name("com.engineforce.awesomeproject10")
+
