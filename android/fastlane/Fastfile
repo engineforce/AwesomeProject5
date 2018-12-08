@@ -21,6 +21,18 @@ platform :android do
     gradle(task: "test")
   end
 
+  desc "Deploy a new internal test version to the Google Play Store"
+  lane :internal_test do
+    gradle(
+      task: "assemble",
+      build_type: "Release"
+    )
+    supply(
+      track: "internal",
+      apk: "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+    )
+  end
+
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
     gradle(task: "clean assembleRelease")
@@ -29,6 +41,7 @@ platform :android do
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end
+  
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
